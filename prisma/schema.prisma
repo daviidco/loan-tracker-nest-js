@@ -1,0 +1,25 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Loan {
+  id          String   @id @default(cuid())
+  startDate   DateTime @map("start_date")
+  endDate     DateTime @map("end_date")
+  to          String
+  from        String
+  phoneNumber String   @map("phone_number")
+  amount      Decimal  @db.Decimal(10, 2)
+  interest    Decimal? @db.Decimal(5, 2)
+  status      String   @default("active")
+  description String?
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("loans")
+}
